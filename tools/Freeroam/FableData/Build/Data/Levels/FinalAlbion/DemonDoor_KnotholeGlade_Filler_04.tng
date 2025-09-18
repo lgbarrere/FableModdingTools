@@ -1,0 +1,30 @@
+Version 2;
+
+XXXSectionStart NULL;
+
+NewThing Object;
+Player 4;
+UID 18446741874686296065;
+DefinitionType "OBJECT_OK_PILLAR_COMPLETE_01";
+ScriptName NULL;
+ScriptData "NULL";
+ThingGamePersistent FALSE;
+ThingLevelPersistent FALSE;
+StartCTCPhysicsStandard;
+PositionX 63.516602;
+PositionY 52.731689;
+PositionZ 25.781973;
+RHSetForwardX 0.0;
+RHSetForwardY 0.999994;
+RHSetForwardZ 0.0;
+RHSetUpX 0.0;
+RHSetUpY 0.0;
+RHSetUpZ 0.999994;
+EndCTCPhysicsStandard;
+StartCTCEditor;
+EndCTCEditor;
+Health 1.0;
+EndThing;
+
+XXXSectionEnd;
+

@@ -1,0 +1,54 @@
+Version 2;
+
+XXXSectionStart NULL;
+
+NewThing Thing;
+Player 4;
+UID 18446741874686296067;
+DefinitionType "NAVIGATION_SEED";
+ScriptName NULL;
+ScriptData "NULL";
+ThingGamePersistent FALSE;
+ThingLevelPersistent FALSE;
+StartCTCPhysicsLight;
+PositionX 9.125488;
+PositionY 7.70166;
+PositionZ 76.751945;
+EndCTCPhysicsLight;
+StartCTCEditor;
+EndCTCEditor;
+StartCTCDNavigationSeed;
+EndCTCDNavigationSeed;
+EndThing;
+
+XXXSectionEnd;
+
+
+XXXSectionStart V_TempleOfLight;
+
+NewThing Marker;
+Player 4;
+UID 18446741874686296065;
+DefinitionType "MARKER_BASIC";
+ScriptName M_TOL_ExitPoint;
+ScriptData "NULL";
+ThingGamePersistent FALSE;
+ThingLevelPersistent FALSE;
+StartCTCPhysicsStandard;
+PositionX 10.287842;
+PositionY 13.662598;
+PositionZ 77.222702;
+RHSetForwardX 0.0;
+RHSetForwardY 0.999994;
+RHSetForwardZ 0.0;
+RHSetUpX 0.0;
+RHSetUpY 0.0;
+RHSetUpZ 0.999994;
+EndCTCPhysicsStandard;
+StartCTCEditor;
+EndCTCEditor;
+Health 1.0;
+EndThing;
+
+XXXSectionEnd;
+

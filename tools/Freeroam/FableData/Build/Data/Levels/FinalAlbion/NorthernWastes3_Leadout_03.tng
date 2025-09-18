@@ -1,0 +1,37 @@
+Version 2;
+
+XXXSectionStart NULL;
+
+NewThing Thing;
+Player 4;
+UID 18446741874686296066;
+DefinitionType "REGION_EXIT_POINT";
+ScriptName NULL;
+ScriptData "NULL";
+ThingGamePersistent FALSE;
+ThingLevelPersistent FALSE;
+StartCTCPhysicsStandard;
+PositionX 15.821716;
+PositionY 0.995117;
+PositionZ 63.573826;
+RHSetForwardX 0.438361;
+RHSetForwardY 0.898773;
+RHSetForwardZ 0.0;
+RHSetUpX 0.0;
+RHSetUpY 0.0;
+RHSetUpZ 0.999994;
+EndCTCPhysicsStandard;
+StartCTCEditor;
+EndCTCEditor;
+StartCTCDRegionExit;
+Active TRUE;
+Radius 5.0;
+MessageRadius 8.0;
+ReversedOnMiniMap FALSE;
+HiddenOnMiniMap FALSE;
+EntranceConnectedToUID 818266448995549240;
+EndCTCDRegionExit;
+EndThing;
+
+XXXSectionEnd;
+

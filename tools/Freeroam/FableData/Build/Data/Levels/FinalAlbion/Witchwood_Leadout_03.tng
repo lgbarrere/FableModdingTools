@@ -1,0 +1,54 @@
+Version 2;
+
+XXXSectionStart NULL;
+
+NewThing Thing;
+Player 4;
+UID 18446741874686296069;
+DefinitionType "NAVIGATION_SEED";
+ScriptName NULL;
+ScriptData "NULL";
+ThingGamePersistent FALSE;
+ThingLevelPersistent FALSE;
+StartCTCPhysicsLight;
+PositionX 5.5448;
+PositionY 28.187256;
+PositionZ 78.142181;
+EndCTCPhysicsLight;
+StartCTCEditor;
+EndCTCEditor;
+StartCTCDNavigationSeed;
+EndCTCDNavigationSeed;
+EndThing;
+
+XXXSectionEnd;
+
+
+XXXSectionStart V_AmbushScam;
+
+NewThing Marker;
+Player 4;
+UID 18446741874686296065;
+DefinitionType "MARKER_BASIC";
+ScriptName M_AS_TricksterExitPoint;
+ScriptData "NULL";
+ThingGamePersistent FALSE;
+ThingLevelPersistent FALSE;
+StartCTCPhysicsStandard;
+PositionX 4.764893;
+PositionY 27.805664;
+PositionZ 78.130745;
+RHSetForwardX 0.0;
+RHSetForwardY 0.999994;
+RHSetForwardZ 0.0;
+RHSetUpX 0.0;
+RHSetUpY 0.0;
+RHSetUpZ 0.999994;
+EndCTCPhysicsStandard;
+StartCTCEditor;
+EndCTCEditor;
+Health 1.0;
+EndThing;
+
+XXXSectionEnd;
+

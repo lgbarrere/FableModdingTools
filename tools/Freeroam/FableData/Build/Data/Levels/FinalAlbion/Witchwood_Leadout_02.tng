@@ -1,0 +1,54 @@
+Version 2;
+
+XXXSectionStart NULL;
+
+NewThing Thing;
+Player 4;
+UID 18446741874686296066;
+DefinitionType "NAVIGATION_SEED";
+ScriptName NULL;
+ScriptData "NULL";
+ThingGamePersistent FALSE;
+ThingLevelPersistent FALSE;
+StartCTCPhysicsLight;
+PositionX 28.971313;
+PositionY 49.974365;
+PositionZ 67.384087;
+EndCTCPhysicsLight;
+StartCTCEditor;
+EndCTCEditor;
+StartCTCDNavigationSeed;
+EndCTCDNavigationSeed;
+EndThing;
+
+XXXSectionEnd;
+
+
+XXXSectionStart V_AmbushScam;
+
+NewThing Marker;
+Player 4;
+UID 18446741874686296065;
+DefinitionType "MARKER_BASIC";
+ScriptName M_AS_BuddyExitPoint;
+ScriptData "NULL";
+ThingGamePersistent FALSE;
+ThingLevelPersistent FALSE;
+StartCTCPhysicsStandard;
+PositionX 27.03064;
+PositionY 51.562744;
+PositionZ 67.21048;
+RHSetForwardX 0.0;
+RHSetForwardY 0.999994;
+RHSetForwardZ 0.0;
+RHSetUpX 0.0;
+RHSetUpY 0.0;
+RHSetUpZ 0.999994;
+EndCTCPhysicsStandard;
+StartCTCEditor;
+EndCTCEditor;
+Health 1.0;
+EndThing;
+
+XXXSectionEnd;
+

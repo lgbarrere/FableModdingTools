@@ -1,0 +1,54 @@
+Version 2;
+
+XXXSectionStart NULL;
+
+NewThing Thing;
+Player 4;
+UID 18446741874686296066;
+DefinitionType "NAVIGATION_SEED";
+ScriptName NULL;
+ScriptData "NULL";
+ThingGamePersistent FALSE;
+ThingLevelPersistent FALSE;
+StartCTCPhysicsLight;
+PositionX 17.109131;
+PositionY 29.29834;
+PositionZ 109.880592;
+EndCTCPhysicsLight;
+StartCTCEditor;
+EndCTCEditor;
+StartCTCDNavigationSeed;
+EndCTCDNavigationSeed;
+EndThing;
+
+XXXSectionEnd;
+
+
+XXXSectionStart V_RandomPopulationSim;
+
+NewThing Marker;
+Player -1;
+UID 18446741874686296065;
+DefinitionType "MARKER_BASIC";
+ScriptName RandomPopulationExit;
+ScriptData "NULL";
+ThingGamePersistent FALSE;
+ThingLevelPersistent FALSE;
+StartCTCPhysicsStandard;
+PositionX 27.553955;
+PositionY 25.955566;
+PositionZ 110.0;
+RHSetForwardX 0.0;
+RHSetForwardY 0.999994;
+RHSetForwardZ 0.0;
+RHSetUpX 0.0;
+RHSetUpY 0.0;
+RHSetUpZ 0.999994;
+EndCTCPhysicsStandard;
+StartCTCEditor;
+EndCTCEditor;
+Health 1.0;
+EndThing;
+
+XXXSectionEnd;
+

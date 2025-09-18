@@ -1,0 +1,31 @@
+Version 2;
+
+XXXSectionStart NULL;
+
+NewThing Object;
+Player 4;
+UID 18446741874686296066;
+DefinitionType "OBJECT_HKC_GALLEON_01";
+ScriptName NULL;
+ScriptData "NULL";
+ThingGamePersistent FALSE;
+ThingLevelPersistent FALSE;
+StartCTCPhysicsStandard;
+PositionX 31.209229;
+PositionY 108.321289;
+PositionZ -8.40004;
+RHSetForwardX -0.94023;
+RHSetForwardY 0.199871;
+RHSetForwardZ 0.275631;
+RHSetUpX 0.22049;
+RHSetUpY -0.259422;
+RHSetUpZ 0.940252;
+EndCTCPhysicsStandard;
+StartCTCEditor;
+EndCTCEditor;
+Health 1.0;
+ObjectScale 0.7;
+EndThing;
+
+XXXSectionEnd;
+

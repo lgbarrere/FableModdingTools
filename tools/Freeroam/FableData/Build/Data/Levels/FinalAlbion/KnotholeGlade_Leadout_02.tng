@@ -1,0 +1,54 @@
+Version 2;
+
+XXXSectionStart NULL;
+
+NewThing Thing;
+Player 4;
+UID 18446741874686296065;
+DefinitionType "NAVIGATION_SEED";
+ScriptName NULL;
+ScriptData "NULL";
+ThingGamePersistent FALSE;
+ThingLevelPersistent FALSE;
+StartCTCPhysicsLight;
+PositionX 6.610352;
+PositionY 8.529297;
+PositionZ 100.001015;
+EndCTCPhysicsLight;
+StartCTCEditor;
+EndCTCEditor;
+StartCTCDNavigationSeed;
+EndCTCDNavigationSeed;
+EndThing;
+
+XXXSectionEnd;
+
+
+XXXSectionStart V_ArcheryCompetition;
+
+NewThing Marker;
+Player 4;
+UID 18446741874686296066;
+DefinitionType "MARKER_BASIC";
+ScriptName M_AC_OwnerExitPoint;
+ScriptData "NULL";
+ThingGamePersistent FALSE;
+ThingLevelPersistent FALSE;
+StartCTCPhysicsStandard;
+PositionX 16.026123;
+PositionY 7.898438;
+PositionZ 100.004143;
+RHSetForwardX 0.0;
+RHSetForwardY 0.999994;
+RHSetForwardZ 0.0;
+RHSetUpX 0.0;
+RHSetUpY 0.0;
+RHSetUpZ 0.999994;
+EndCTCPhysicsStandard;
+StartCTCEditor;
+EndCTCEditor;
+Health 1.0;
+EndThing;
+
+XXXSectionEnd;
+

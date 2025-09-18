@@ -1,0 +1,42 @@
+Version 2;
+
+XXXSectionStart NULL;
+
+NewThing Building;
+Player 4;
+UID 18446741874686296065;
+DefinitionType "BUILDING_PRISON_COURTYARD_01";
+ScriptName NULL;
+ScriptData "NULL";
+ThingGamePersistent FALSE;
+ThingLevelPersistent FALSE;
+StartCTCPhysicsStandard;
+PositionX 116.640869;
+PositionY 123.941895;
+PositionZ 11.0;
+RHSetForwardX 0.406045;
+RHSetForwardY 0.913847;
+RHSetForwardZ 0.0;
+RHSetUpX -0.000631;
+RHSetUpY 0.00028;
+RHSetUpZ 0.999994;
+EndCTCPhysicsStandard;
+StartCTCEditor;
+EndCTCEditor;
+StartCTCVillageMember;
+VillageUID 0;
+EndCTCVillageMember;
+StartCTCBuyableHouse;
+WifeLivingHere 0;
+OwnedByPlayer FALSE;
+IsScripted FALSE;
+Rented FALSE;
+DayNextRentIsDue 2147483647;
+CurrentDressLevel 0;
+VirtualMoneyBags 0;
+EndCTCBuyableHouse;
+Health 15000.0;
+EndThing;
+
+XXXSectionEnd;
+

@@ -1,0 +1,30 @@
+Version 2;
+
+XXXSectionStart NULL;
+
+NewThing Object;
+Player 4;
+UID 18446741874686296065;
+DefinitionType "OBJECT_DARKWOOD_TREESTUMP_01";
+ScriptName NULL;
+ScriptData "NULL";
+ThingGamePersistent FALSE;
+ThingLevelPersistent FALSE;
+StartCTCPhysicsStandard;
+PositionX 139.708008;
+PositionY 90.265259;
+PositionZ 41.866558;
+RHSetForwardX 0.207911;
+RHSetForwardY 0.978142;
+RHSetForwardZ 0.0;
+RHSetUpX 0.0;
+RHSetUpY 0.0;
+RHSetUpZ 0.999994;
+EndCTCPhysicsStandard;
+StartCTCEditor;
+EndCTCEditor;
+Health 1.0;
+EndThing;
+
+XXXSectionEnd;
+

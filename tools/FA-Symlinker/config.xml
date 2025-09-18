@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<!--
+	UseRegistry - TRUE or FALSE. If You want Fable Explorer to lookup your install - use this as TRUE
+	RegistryPath - The path that it seeks in the registry by default
+	InstallDirectory - If UseRegistry is False, it will look for Fable.exe or default.xbe (Xbox) in your specified path to verify it is correct
+	InternalSplash - TRUE or FALSE. If you want to use a different splash than the one that is compiled it must be set to FALSE
+	SplashFileName - If FALSE it will look for file in the same directory as Fable Explorer.
+	-->	
+	
+<FableExplorer>
+	<ApplicationSettings>
+		<UseRegistry>FALSE</UseRegistry>
+		<RegistryPath>SOFTWARE\\Microsoft\\Microsoft Games\\Fable\\1.0</RegistryPath>
+		<InstallDirectory>c:\Program Files\Microsoft Games\Fable - The Lost Chapters\</InstallDirectory>
+		<InternalSplash>FALSE</InternalSplash>
+		<SplashFileName>Shadow Net.jpg</SplashFileName>
+	</ApplicationSettings>		
+</FableExplorer>
