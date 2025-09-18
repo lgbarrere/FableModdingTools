@@ -1,0 +1,30 @@
+Version 2;
+
+XXXSectionStart NULL;
+
+NewThing Object;
+Player 4;
+UID 18446741874686296065;
+DefinitionType "OBJECT_BRIGHTWOOD_LARGEROCK_02";
+ScriptName NULL;
+ScriptData "NULL";
+ThingGamePersistent FALSE;
+ThingLevelPersistent FALSE;
+StartCTCPhysicsStandard;
+PositionX 7.363037;
+PositionY 169.32666;
+PositionZ 45.495235;
+RHSetForwardX 0.983743;
+RHSetForwardY -0.179453;
+RHSetForwardZ 0.0;
+RHSetUpX 0.0;
+RHSetUpY 0.0;
+RHSetUpZ 0.999994;
+EndCTCPhysicsStandard;
+StartCTCEditor;
+EndCTCEditor;
+Health 1.0;
+EndThing;
+
+XXXSectionEnd;
+

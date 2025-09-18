@@ -1,0 +1,31 @@
+Version 2;
+
+XXXSectionStart NULL;
+
+NewThing Object;
+Player 4;
+UID 18446741874686296074;
+DefinitionType "OBJECT_SNOWSPIRE_NECROPOLIS_VISTA";
+ScriptName NULL;
+ScriptData "NULL";
+ThingGamePersistent FALSE;
+ThingLevelPersistent FALSE;
+StartCTCPhysicsStandard;
+PositionX 100.069824;
+PositionY 116.847656;
+PositionZ 60.0159;
+RHSetForwardX 0.0;
+RHSetForwardY 0.999994;
+RHSetForwardZ 0.0;
+RHSetUpX 0.0;
+RHSetUpY 0.0;
+RHSetUpZ 0.999994;
+EndCTCPhysicsStandard;
+StartCTCEditor;
+EndCTCEditor;
+Health 1.0;
+ObjectScale 0.05;
+EndThing;
+
+XXXSectionEnd;
+

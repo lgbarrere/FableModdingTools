@@ -1,0 +1,78 @@
+Version 2;
+
+XXXSectionStart NULL;
+
+NewThing Object;
+Player 4;
+UID 18446741874686296083;
+DefinitionType "OBJECT_BRIGHTWOOD_MEDIUMROCK_01";
+ScriptName NULL;
+ScriptData "NULL";
+ThingGamePersistent FALSE;
+ThingLevelPersistent FALSE;
+StartCTCPhysicsStandard;
+PositionX 79.847168;
+PositionY 94.403442;
+PositionZ 2.442746;
+RHSetForwardX -0.144358;
+RHSetForwardY 0.98952;
+RHSetForwardZ 0.0;
+RHSetUpX 0.0;
+RHSetUpY 0.0;
+RHSetUpZ 0.999994;
+EndCTCPhysicsStandard;
+StartCTCEditor;
+EndCTCEditor;
+Health 1.0;
+EndThing;
+
+NewThing Object;
+Player 4;
+UID 18446741874686296082;
+DefinitionType "OBJECT_BRIGHTWOOD_LARGEROCK_04";
+ScriptName NULL;
+ScriptData "NULL";
+ThingGamePersistent FALSE;
+ThingLevelPersistent FALSE;
+StartCTCPhysicsStandard;
+PositionX 84.04541;
+PositionY 96.228149;
+PositionZ 2.488358;
+RHSetForwardX 0.418396;
+RHSetForwardY -0.908239;
+RHSetForwardZ 0.0;
+RHSetUpX 0.000627;
+RHSetUpY 0.000289;
+RHSetUpZ 0.999994;
+EndCTCPhysicsStandard;
+StartCTCEditor;
+EndCTCEditor;
+Health 1.0;
+EndThing;
+
+NewThing Object;
+Player 4;
+UID 18446741874686296070;
+DefinitionType "OBJECT_BRIGHTWOOD_MEDIUMROCK_02";
+ScriptName NULL;
+ScriptData "NULL";
+ThingGamePersistent FALSE;
+ThingLevelPersistent FALSE;
+StartCTCPhysicsStandard;
+PositionX 95.470947;
+PositionY 88.878418;
+PositionZ 3.297929;
+RHSetForwardX 0.265047;
+RHSetForwardY -0.961703;
+RHSetForwardZ -0.069755;
+RHSetUpX 0.152521;
+RHSetUpY -0.029617;
+RHSetUpZ 0.98785;
+EndCTCPhysicsStandard;
+StartCTCEditor;
+EndCTCEditor;
+Health 1.0;
+EndThing;
+
+XXXSectionEnd;
+

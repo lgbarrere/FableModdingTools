@@ -1,0 +1,54 @@
+Version 2;
+
+XXXSectionStart NULL;
+
+NewThing Object;
+Player 4;
+UID 18446741874686296066;
+DefinitionType "OBJECT_OAKVALE_FENCETRIPLE_BROKEN_01";
+ScriptName NULL;
+ScriptData "NULL";
+ThingGamePersistent FALSE;
+ThingLevelPersistent FALSE;
+StartCTCPhysicsStandard;
+PositionX 27.187256;
+PositionY 46.294434;
+PositionZ 52.02916;
+RHSetForwardX -0.587777;
+RHSetForwardY 0.809016;
+RHSetForwardZ 0.0;
+RHSetUpX -0.000394;
+RHSetUpY -0.000286;
+RHSetUpZ 0.999994;
+EndCTCPhysicsStandard;
+StartCTCEditor;
+EndCTCEditor;
+Health 1.0;
+EndThing;
+
+NewThing Object;
+Player 4;
+UID 18446741874686296067;
+DefinitionType "OBJECT_OAKVALE_FENCEPOST_01";
+ScriptName NULL;
+ScriptData "NULL";
+ThingGamePersistent FALSE;
+ThingLevelPersistent FALSE;
+StartCTCPhysicsStandard;
+PositionX 22.373291;
+PositionY 42.787842;
+PositionZ 52.127338;
+RHSetForwardX -0.469466;
+RHSetForwardY 0.882944;
+RHSetForwardZ 0.0;
+RHSetUpX -0.000305;
+RHSetUpY -0.000162;
+RHSetUpZ 0.999994;
+EndCTCPhysicsStandard;
+StartCTCEditor;
+EndCTCEditor;
+Health 1.0;
+EndThing;
+
+XXXSectionEnd;
+
