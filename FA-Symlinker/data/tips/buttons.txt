@@ -1,0 +1,3 @@
+<title>Button Configurations</title>
+
+You can configure some of the editing buttons. It's really quite simple. Open FableMod.Buttons.XML (you can find it in the application folder) in a text editor and change it.
