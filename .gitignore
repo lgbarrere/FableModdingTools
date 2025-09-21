@@ -1,0 +1,6 @@
+# Generated files
+FA-Symlinker/data/uids.txt
+*.Log
+
+# Configurations
+/FA-Symlinker/FEMan
