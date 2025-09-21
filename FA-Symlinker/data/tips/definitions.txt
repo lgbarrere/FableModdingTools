@@ -1,0 +1,3 @@
+<title>Thing Definitions</title>
+
+There's a file called TNGDEFINITIONS.XML in the data folder. By editing it you can assign custom models to the things aka. objects that appear on the levels.

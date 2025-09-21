@@ -1,0 +1,3 @@
+<title>Startup Files</title>
+
+In the data folder there's a file called STARTUP.XML. In this file you can define what Fable files will be opened when CBox launches. You can even define whether or not the editor for that file will be shown automatically.
