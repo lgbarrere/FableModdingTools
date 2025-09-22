@@ -2,14 +2,17 @@
 setlocal enabledelayedexpansion
 
 :: === Global constants for default paths ===
-set "DEFAULT_DIR_TLC=C:\Program Files (x86)\Microsoft Games\Fable - The Lost Chapters"
-set "DEFAULT_DIR_ANNIV=C:\Program Files (x86)\Steam\steamapps\common\Fable Anniversary"
-set "EXPLORER_DEFAULT=%~dp0"
-set "OUTPUT_DIR=%EXPLORER_DEFAULT%\config"
+set "DEFAULT_DIR_FTLC_CD=C:\Program Files (x86)\Microsoft Games\Fable - The Lost Chapters"
+set "DEFAULT_DIR_FTLC_STEAM=C:\Program Files (x86)\Steam\steamapps\common\Fable The Lost Chapters"
+set "DEFAULT_DIR_FA=C:\Program Files (x86)\Steam\steamapps\common\Fable Anniversary"
+set "ROOT_DIR=%~dp0"
+set "CONFIG_DIR=%ROOT_DIR%\config"
+set "CONFIG_FTLC=FTLC_path.txt"
+set "CONFIG_FA=FA_path.txt"
 
 :: === Global variables for loaded or set paths by the user ===
-set "fabletlc="
-set "fableanni="
+set "ftlcPath="
+set "faPath="
 
 :: === Initializations ===
 call :require_admin
@@ -20,17 +23,19 @@ call :load_paths
 cls
 call :show_logo
 echo.
-echo Fable TLC location: %fabletlc%
-echo Fable Anniversary location: %fableanni%
+echo Fable TLC location: %ftlcPath%
+echo Fable Anniversary location: %faPath%
 echo.
-echo     MANAGE FABLE VERSIONS
-echo     ----------------------
-echo     1) Set directories
+echo     MOD SETUP OPTIONS TO USE IN ORDER
+echo     ---------------------------------
+echo     1) Set Fable directories
 echo     2) Enable mods
-echo     3) Make a backup of TLC folder
-echo     4) Create symlink
-echo     5) Remove symlink
-echo     6) Load default directories
+echo     3) Make a backup of Fable TLC
+echo     4) Create FTLC-FA symlink
+echo.
+echo     EXTRA OPTIONS
+echo     ---------------------------------
+echo     D) Load default directories
 echo     C) Launch ChocolateBox
 echo     E) Launch Fable Explorer
 echo     Q) Quit
@@ -40,13 +45,12 @@ set "userinp=%userinp:~0,1%"
 if /I "%userinp%"=="1" goto SETDIR
 if /I "%userinp%"=="2" goto ENABLEMODS
 if /I "%userinp%"=="3" goto BACKUP
-if /I "%userinp%"=="4" goto INSTALL
-if /I "%userinp%"=="5" goto REMOVE
-if /I "%userinp%"=="6" goto DEFDIRS
+if /I "%userinp%"=="4" goto SYMLINK
+if /I "%userinp%"=="D" goto DEFAULT
 if /I "%userinp%"=="C" goto CHOCOLATEBOX
-if /I "%userinp%"=="E" goto EXPLORER
+if /I "%userinp%"=="E" goto FABLEEXPLORER
 if /I "%userinp%"=="Q" goto QUIT
-echo Invalid selection. Try again...
+echo Invalid selection, try again...
 pause
 goto mainmenu
 
@@ -54,7 +58,7 @@ goto mainmenu
 
 :require_admin
     rem Check if this script is in Admin mode, otherwise restart as Admin
-    @color 0c
+    color 0c
     fsutil dirty query %systemdrive% >nul 2>&1
     if errorlevel 1 (
         echo Admin premissions required to use this script, please accept to reload.
@@ -63,23 +67,23 @@ goto mainmenu
         goto QUIT rem Close this non-admin script
     )
     rem Already Admin, continuing
+    title Fable Anniversary Symlinker
+    mode con: cols=100 lines=40
+    color 0a
     goto :eof
 
 :init_directories
     rem Make a directory to save paths if missing
-    if not exist "%OUTPUT_DIR%" mkdir "%OUTPUT_DIR%"
+    if not exist "%CONFIG_DIR%\" mkdir "%CONFIG_DIR%"
     goto :eof
 
 :load_paths
     rem Load configured paths if any
-    if exist "%OUTPUT_DIR%\tlc.txt" set /p fabletlc=<"%OUTPUT_DIR%\tlc.txt"
-    if exist "%OUTPUT_DIR%\anni.txt" set /p fableanni=<"%OUTPUT_DIR%\anni.txt"
+    if exist "%CONFIG_DIR%\%CONFIG_FTLC%" set /p ftlcPath=<"%CONFIG_DIR%\%CONFIG_FTLC%"
+    if exist "%CONFIG_DIR%\%CONFIG_FA%" set /p faPath=<"%CONFIG_DIR%\%CONFIG_FA%"
     goto :eof
 
 :show_logo
-    mode con: cols=100 lines=40
-    color 0a
-    title Fable Anniversary Symlinker
     echo.
     echo    `.://:-..--...-        `:+:`         `.://-......`      `-:::..```        `.::/-......`.-`-`
     echo      .sy+         .`      .s-:y-          :fs:     `-+:.     /yy.              :yh/      `  -
@@ -100,7 +104,7 @@ goto mainmenu
 
     rem Use delayed expansions to avoid issues with paths containing whitespaces
     if exist "!path!\" (
-        echo !path!>"!OUTPUT_DIR!\!fileName!"
+        echo !path!>"!CONFIG_DIR!\!fileName!"
     ) else (
         echo The path !path! was not found, the save file cannot be edited
     )
@@ -111,19 +115,35 @@ goto mainmenu
 
 :SET_TLC
     cls
-    echo Enter custom path for Fable TLC (without trailing backslash):
-    set /p "fabletlc=Path: "
-    call :savedir "%fabletlc%" tlc.txt
-    echo TLC directory set to %fabletlc%
+    echo Enter custom path for Fable TLC (without ending backslash):
+    set /p "userInput=Path: "
+
+    if exist "!userInput!\" (
+        set "ftlcPath=!userInput!"
+        call :savedir "!ftlcPath!" "!CONFIG_FTLC!"
+        echo TLC directory set to !ftlcPath!
+    ) else (
+        echo The specified directory does not exist
+        echo Please try again from the main menu
+    )
+
     pause
     goto mainmenu
 
 :SET_ANNIV
     cls
-    echo Enter custom path for Fable Anniversary (without trailing backslash):
-    set /p "fableanni=Path: "
-    call :savedir "%fableanni%" anni.txt
-    echo Anniversary directory set to %fableanni%
+    echo Enter custom path for Fable Anniversary (without ending backslash):
+    set /p "userInput=Path: "
+
+    if exist "!userInput!\" (
+        set "faPath=!userInput!"
+        call :savedir "!faPath!" "!CONFIG_FA!"
+        echo Anniversary directory set to !faPath!
+    ) else (
+        echo The specified directory does not exist
+        echo Please try again from the main menu
+    )
+
     pause
     goto mainmenu
 
@@ -148,20 +168,20 @@ goto mainmenu
     echo Enabling modifications...
 
     rem Allow modding for Fable TLC
-    if exist "%fabletlc%\" (
-        takeown /f "%fabletlc%" /r
-        icacls "%fabletlc%" /grant "%USERNAME%":F /t
-        attrib -r "%fabletlc%\*.*" /s /d
+    if exist "!ftlcPath!\" (
+        takeown /f "!ftlcPath!" /r
+        icacls "!ftlcPath!" /grant "%USERNAME%":F /t
+        attrib -r "!ftlcPath!\*.*" /s /d
     ) else (
         echo The path to Fable TLC is not correct, consider to set it from the main menu
         pause
     )
 
     rem Allow modding for Fable Anniversary
-    if exist "%fableanni%\" (
-        takeown /f "%fableanni%" /r
-        icacls "%fableanni%" /grant "%USERNAME%":F /t
-        attrib -r "%fableanni%\*.*" /s /d
+    if exist "!faPath!\" (
+        takeown /f "!faPath!" /r
+        icacls "!faPath!" /grant "%USERNAME%":F /t
+        attrib -r "!faPath!\*.*" /s /d
     ) else (
         echo The path to Fable Anniversary is not correct, consider to set it from the main menu
         pause
@@ -174,29 +194,29 @@ goto mainmenu
 :BACKUP
     cls
     rem Check the game folder exists
-    if not exist "%fabletlc%\" (
+    if not exist "!ftlcPath!\" (
         echo Fable - The Lost Chapters folder not found
         echo Please set it from the main menu
         pause
         goto mainmenu
     )
 
-    rem Extract parent folder from %fabletlc%
+    rem Extract parent folder from %ftlcPath%
     echo Creating backup of Fable - The Lost Chapters...
-    for %%I in ("%fabletlc%") do set "PARENT_DIR=%%~dpI"
+    for %%I in ("%ftlcPath%") do set "PARENT_DIR=%%~dpI"
     set "PARENT_DIR=%PARENT_DIR:~0,-1%"
 
     rem Set path for the backup
     set "gameDirBackup=%PARENT_DIR%\Fable - TLC"
 
     rem Check no backup exists, otherwise clean it
-    if exist "%gameDirBackup%\" (
+    if exist "!gameDirBackup!\" (
         echo Backup folder already exists, deleting it...
-        rmdir /s /q "%gameDirBackup%" >nul 2>&1
-        if exist "%gameDirBackup%\" (
+        rmdir /s /q "!gameDirBackup!" >nul 2>&1
+        if exist "!gameDirBackup!\" (
             echo Failed to delete existing backup
             echo A backup file might be in use, operation aborted
-            echo The corrupted backup is located at "%gameDirBackup%"
+            echo The corrupted backup is located at "!gameDirBackup!"
             pause
             goto mainmenu
         ) else (
@@ -205,22 +225,22 @@ goto mainmenu
     )
 
     rem Copy the game folder in the backup folder
-    echo Copying "%fabletlc%" to "%gameDirBackup%", please wait...
-    xcopy "%fabletlc%" "%gameDirBackup%\" /E /I /H /K /Y >nul
+    echo Copying "%ftlcPath%" to "%gameDirBackup%", please wait...
+    xcopy "%ftlcPath%" "%gameDirBackup%\" /E /I /H /K /Y >nul
     echo Backup completed successfully
 
     pause
     goto mainmenu
 
-:INSTALL
-    rem Check %fabletlc\% exists
+:SYMLINK
+    rem Check the path to FTLC exists
     cls
-    if not exist "%fabletlc%\" (
+    if not exist "!ftlcPath!\" (
         echo Fable TLC folder not found, please set it from the main menu
         pause
 
-        rem Check %fabletanni\% exists
-        if not exist "%fableanni%\" (
+        rem Check the path to FA exists
+        if not exist "!faPath!\" (
             echo Fable Anniversary folder not found, please set it from the main menu
             pause
             goto mainmenu
@@ -231,19 +251,19 @@ goto mainmenu
 
     rem Make a junction from Fable TLC and Anniversary
     echo Making a junction...
-    set "junctionPath=%fabletlc%\data\Levels\FinalAlbion"
-    set "targetPath=%fableanni%\WellingtonGame\FableData\Build\Data\Levels\FinalAlbion"
+    set "junctionPath=%ftlcPath%\data\Levels\FinalAlbion"
+    set "targetPath=%faPath%\WellingtonGame\FableData\Build\Data\Levels\FinalAlbion"
 
     rem Check the path to the jonction already exists
-    if exist "%junctionPath%\" (
+    if exist "!junctionPath!\" (
         rem Check if the path lead to a junction (not a folder)
-        dir "%junctionPath%" | findstr /i "<JUNCTION>" >nul
+        dir "!junctionPath!" | findstr /i "<JUNCTION>" >nul
         if %errorlevel%==0 (
             echo The junction already exists
             echo Replacement with a new junction...
-            rmdir "%junctionPath%"
+            rmdir "!junctionPath!"
         ) else (
-            echo "%junctionPath%" exists but it is not a junction
+            echo "!junctionPath!" exists but it is not a junction
             echo Consider making a backup from the menu and remove the folder manually
             echo Operation aborted
             pause
@@ -256,53 +276,54 @@ goto mainmenu
     pause
     goto mainmenu
 
-:REMOVE
-    cls
-    set "junctionPath=%fabletlc%\data\Levels\FinalAlbion"
-
-    rem Check the path to the jonction exists
-    if exist "%junctionPath%\" (
-        rem Check if the path lead to a junction (not a folder)
-        dir "%junctionPath%" | findstr /i "<JUNCTION>" >nul
-        if %errorlevel%==0 (
-            echo The junction exists
-            echo Deletion of the junction...
-            rmdir "%junctionPath%"
-            echo Junction removed
-        ) else (
-            echo The following path exists but it is not a junction:
-            echo "%junctionPath%"
-            echo Consider making a backup from the main menu and remove the folder manually
-            echo Operation aborted
-        )
-    ) else (
-        echo The following path to the junction does not exist:
-        echo "%junctionPath%"*
-        echo Operation aborted
-    )
-
-    pause
-    goto mainmenu
-
-:DEFDIRS
+:DEFAULT
     rem Reset to defaults
     cls
-    set "fabletlc=%DEFAULT_DIR_TLC%"
-    set "fableanni=%DEFAULT_DIR_ANNIV%"
-    call :savedir "%fabletlc%" tlc.txt
-    call :savedir "%fableanni%" anni.txt
-    echo Default directories loaded
+
+    rem Check the default path to TLC (CD version) exists
+    if exist "!DEFAULT_DIR_FTLC_CD!\" (
+        set "ftlcPath=!DEFAULT_DIR_FTLC_CD!"
+        call :savedir "!ftlcPath!" "!CONFIG_FTLC!" >nul
+    ) else (
+        echo The CD version of Fable TLC was not found at the default location:
+        echo !DEFAULT_DIR_FTLC_CD!
+        echo Trying to use the Steam version...
+        echo.
+
+        rem Check the default path to TLC (Steam version) exists
+        if exist "!DEFAULT_DIR_FTLC_STEAM!" (
+            set "ftlcPath=!DEFAULT_DIR_FTLC_STEAM!"
+            call :savedir "!ftlcPath!" "!CONFIG_FTLC!" >nul
+        ) else (
+            echo The Steam version of Fable TLC was not found at the default location:
+            echo !DEFAULT_DIR_FTLC_STEAM!
+            echo.
+        )
+    )
+
+    if exist "!DEFAULT_DIR_FA!" (
+        set "faPath=!DEFAULT_DIR_FA!"
+        call :savedir "!faPath!" "!CONFIG_FA!" >nul
+    ) else (
+        echo Fable Anniversary was not found at the default location:
+        echo !DEFAULT_DIR_FA!
+        echo.
+    )
+
+    echo Loading operations finished
     pause
     goto mainmenu
 
 :CHOCOLATEBOX
-    copy /Y "%EXPLORER_DEFAULT%\tools\default_xuserst.ini" "%fableanni%\WellingtonGame\FableData\Build"
-    start "" "%EXPLORER_DEFAULT%\tools\ChocolateBox.exe"
+    if exist "!faPath!\" (
+        copy /Y "!ROOT_DIR!\tools\default_xuserst.ini" "!faPath!\WellingtonGame\FableData\Build"
+    )
+    start "" "%ROOT_DIR%\tools\ChocolateBox.exe"
     goto mainmenu
 
-:EXPLORER
-    rem Move where FableExplorer.exe to make it detect def.xml dependency
-    cd /d %EXPLORER_DEFAULT%\tools
+:FABLEEXPLORER
+    rem Move where FableExplorer.exe is to make it detect def.xml dependency
+    cd /d %ROOT_DIR%\tools
     start "" "FableExplorer.exe"
     goto mainmenu
 
