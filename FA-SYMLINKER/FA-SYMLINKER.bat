@@ -5,7 +5,7 @@ setlocal enabledelayedexpansion
 set "DEFAULT_DIR_TLC=C:\Program Files (x86)\Microsoft Games\Fable - The Lost Chapters"
 set "DEFAULT_DIR_ANNIV=C:\Program Files (x86)\Steam\steamapps\common\Fable Anniversary"
 set "EXPLORER_DEFAULT=%~dp0"
-set "OUTPUT_DIR=%EXPLORER_DEFAULT%\FEMan"
+set "OUTPUT_DIR=%EXPLORER_DEFAULT%\config"
 
 :: === Global variables for loaded or set paths by the user ===
 set "fabletlc="
@@ -79,7 +79,7 @@ goto mainmenu
 :show_logo
     mode con: cols=100 lines=40
     color 0a
-    title FEMan - Fable Symlinker
+    title Fable Anniversary Symlinker
     echo.
     echo    `.://:-..--...-        `:+:`         `.://-......`      `-:::..```        `.::/-......`.-`-`
     echo      .sy+         .`      .s-:y-          :fs:     `-+:.     /yy.              :yh/      `  -
@@ -296,20 +296,14 @@ goto mainmenu
     goto mainmenu
 
 :CHOCOLATEBOX
-    copy /Y "%EXPLORER_DEFAULT%\default_xuserst.ini" "%fableanni%\WellingtonGame\FableData\Build"
-    start "" "%EXPLORER_DEFAULT%\ChocolateBox.exe"
+    copy /Y "%EXPLORER_DEFAULT%\tools\default_xuserst.ini" "%fableanni%\WellingtonGame\FableData\Build"
+    start "" "%EXPLORER_DEFAULT%\tools\ChocolateBox.exe"
     goto mainmenu
 
 :EXPLORER
-    if exist "%EXPLORER_DEFAULT%\FableExplorer.exe" (
-        rem Move where FableExplorer.exe is to be able to find def.xml dependency
-        cd /d %EXPLORER_DEFAULT%
-        start "" "FableExplorer.exe"
-    ) else (
-        echo Fable Explorer path could not be found.
-        echo Please set it with options 8 or 9 from the main menu.
-        pause
-    )
+    rem Move where FableExplorer.exe to make it detect def.xml dependency
+    cd /d %EXPLORER_DEFAULT%\tools
+    start "" "FableExplorer.exe"
     goto mainmenu
 
 :QUIT
