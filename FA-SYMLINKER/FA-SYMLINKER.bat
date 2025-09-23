@@ -21,7 +21,17 @@ call :load_paths
 
 :mainmenu
 cls
-call :show_logo
+echo.
+echo    `.://:-..--...-        `:+:`         `.://-......`      `-:::..```        `.::/-......`.-`-`
+echo      .sy+         .`      .s-:y-          :fs:     `-+:.     /yy.              :yh/      `  -
+echo      .sy:         `      .s. .:h-         :uh.      -yd:     /sy`              :yy.         `
+echo      .sy/````     `     -s`   `:y:        :ci.````./+/-      /sy`              :yy-```
+echo      .sy+-..```        -s-`....-:y:       :kt.`````..-:-`    /sy`              :sy:.```
+echo      .sy:             :o-......`.:y:      :sy.        :/oh.   /sy`          `   .+o-
+echo      .sy:           `++          `:y/     :os+`     `.shit`   /ss.          -    .-/.
+echo     `.+o:`         `+o.`          -/o.   `:+/damn:---//-`   `:+///:--:::-./-     `.::-.`````
+echo                                           `````````         `  ``````````
+echo ----------------------------------------------
 echo.
 echo Fable TLC location: %ftlcPath%
 echo Fable Anniversary location: %faPath%
@@ -57,11 +67,12 @@ goto mainmenu
 :: === Fonctions / Labels ===
 
 :require_admin
+    rem Usage: call :require_admin
     rem Check if this script is in Admin mode, otherwise restart as Admin
     color 0c
     fsutil dirty query %systemdrive% >nul 2>&1
     if errorlevel 1 (
-        echo Admin premissions required to use this script, please accept to reload.
+        echo Admin premissions required to use this script, please agree to restart
         pause
         powershell -Command "Start-Process -FilePath '%~f0' -Verb RunAs"
         goto QUIT rem Close this non-admin script
@@ -73,28 +84,16 @@ goto mainmenu
     goto :eof
 
 :init_directories
+    rem Usage: call :init_directories
     rem Make a directory to save paths if missing
     if not exist "%CONFIG_DIR%\" mkdir "%CONFIG_DIR%"
     goto :eof
 
 :load_paths
+    rem Usage: call :load_paths
     rem Load configured paths if any
     if exist "%CONFIG_DIR%\%CONFIG_FTLC%" set /p ftlcPath=<"%CONFIG_DIR%\%CONFIG_FTLC%"
     if exist "%CONFIG_DIR%\%CONFIG_FA%" set /p faPath=<"%CONFIG_DIR%\%CONFIG_FA%"
-    goto :eof
-
-:show_logo
-    echo.
-    echo    `.://:-..--...-        `:+:`         `.://-......`      `-:::..```        `.::/-......`.-`-`
-    echo      .sy+         .`      .s-:y-          :fs:     `-+:.     /yy.              :yh/      `  -
-    echo      .sy:         `      .s. .:h-         :uh.      -yd:     /sy`              :yy.         `
-    echo      .sy/````     `     -s`   `:y:        :ci.````./+/-      /sy`              :yy-```
-    echo      .sy+-..```        -s-`....-:y:       :kt.`````..-:-`    /sy`              :sy:.```
-    echo      .sy:             :o-......`.:y:      :sy.        :/oh.   /sy`          `   .+o-
-    echo      .sy:           `++          `:y/     :os+`     `.shit`   /ss.          -    .-/.
-    echo     `.+o:`         `+o.`          -/o.   `:+/damn:---//-`   `:+///:--:::-./-     `.::-.`````
-    echo                                           `````````         `  ``````````
-    echo ----------------------------------------------
     goto :eof
 
 :savedir
@@ -123,8 +122,9 @@ goto mainmenu
         call :savedir "!ftlcPath!" "!CONFIG_FTLC!"
         echo TLC directory set to !ftlcPath!
     ) else (
-        echo The specified directory does not exist
-        echo Please try again from the main menu
+        echo The specified directory does not exist, please try again...
+        pause
+        goto SETDIR
     )
 
     pause
@@ -140,8 +140,9 @@ goto mainmenu
         call :savedir "!faPath!" "!CONFIG_FA!"
         echo Anniversary directory set to !faPath!
     ) else (
-        echo The specified directory does not exist
-        echo Please try again from the main menu
+        echo The specified directory does not exist, please try again...
+        pause
+        goto SETDIR
     )
 
     pause
@@ -174,6 +175,7 @@ goto mainmenu
         attrib -r "!ftlcPath!\*.*" /s /d
     ) else (
         echo The path to Fable TLC is not correct, consider to set it from the main menu
+        echo.
         pause
     )
 
@@ -184,6 +186,7 @@ goto mainmenu
         attrib -r "!faPath!\*.*" /s /d
     ) else (
         echo The path to Fable Anniversary is not correct, consider to set it from the main menu
+        echo.
         pause
     )
 
@@ -195,8 +198,7 @@ goto mainmenu
     cls
     rem Check the game folder exists
     if not exist "!ftlcPath!\" (
-        echo Fable - The Lost Chapters folder not found
-        echo Please set it from the main menu
+        echo Path to Fable - The Lost Chapters not found, please set it from the main menu
         pause
         goto mainmenu
     )
@@ -225,7 +227,9 @@ goto mainmenu
     )
 
     rem Copy the game folder in the backup folder
-    echo Copying "%ftlcPath%" to "%gameDirBackup%", please wait...
+    echo.
+    echo Copying "%ftlcPath%" to "%gameDirBackup%"
+    echo Please wait, this operation can take a while...
     xcopy "%ftlcPath%" "%gameDirBackup%\" /E /I /H /K /Y >nul
     echo Backup completed successfully
 
@@ -235,17 +239,23 @@ goto mainmenu
 :SYMLINK
     rem Check the path to FTLC exists
     cls
+    set isMissingPath=0
+
     if not exist "!ftlcPath!\" (
         echo Fable TLC folder not found, please set it from the main menu
         pause
+        set isMissingPath=1
+    )
 
-        rem Check the path to FA exists
-        if not exist "!faPath!\" (
-            echo Fable Anniversary folder not found, please set it from the main menu
-            pause
-            goto mainmenu
-        )
+    rem Check the path to FA exists
+    if not exist "!faPath!\" (
+        echo Fable Anniversary folder not found, please set it from the main menu
+        pause
+        set isMissingPath=1
+    )
 
+    rem Go back to the main menu if a path is missing
+    if %isMissingPath%==1 (
         goto mainmenu
     )
 
@@ -263,7 +273,8 @@ goto mainmenu
             echo Replacement with a new junction...
             rmdir "!junctionPath!"
         ) else (
-            echo "!junctionPath!" exists but it is not a junction
+            echo The following path exists but it is not a junction or it is corrupted:
+            echo !junctionPath!
             echo Consider making a backup from the menu and remove the folder manually
             echo Operation aborted
             pause
@@ -281,6 +292,7 @@ goto mainmenu
     cls
 
     rem Check the default path to TLC (CD version) exists
+    echo Loading default paths
     if exist "!DEFAULT_DIR_FTLC_CD!\" (
         set "ftlcPath=!DEFAULT_DIR_FTLC_CD!"
         call :savedir "!ftlcPath!" "!CONFIG_FTLC!" >nul
@@ -315,13 +327,15 @@ goto mainmenu
     goto mainmenu
 
 :CHOCOLATEBOX
+    rem Launch ChocolateBox
     if exist "!faPath!\" (
-        copy /Y "!ROOT_DIR!\tools\default_xuserst.ini" "!faPath!\WellingtonGame\FableData\Build"
+        copy /Y "!ROOT_DIR!\tools\default_xuserst.ini" "!faPath!\WellingtonGame\FableData\Build" >nul
     )
     start "" "%ROOT_DIR%\tools\ChocolateBox.exe"
     goto mainmenu
 
 :FABLEEXPLORER
+    rem Launch Fable Explorer
     rem Move where FableExplorer.exe is to make it detect def.xml dependency
     cd /d %ROOT_DIR%\tools
     start "" "FableExplorer.exe"
