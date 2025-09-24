@@ -1,3 +1,4 @@
+:: Author: Yaranorgoth
 @echo off
 setlocal enabledelayedexpansion
 
@@ -31,17 +32,17 @@ echo      .sy:             :o-......`.:y:      :sy.        :/oh.   /sy`         
 echo      .sy:           `++          `:y/     :os+`     `.shit`   /ss.          -    .-/.
 echo     `.+o:`         `+o.`          -/o.   `:+/damn:---//-`   `:+///:--:::-./-     `.::-.`````
 echo                                           `````````         `  ``````````
-echo ----------------------------------------------
+echo ----------------------------------------------------------------------------------------------------
 echo.
 echo Fable TLC location: %ftlcPath%
 echo Fable Anniversary location: %faPath%
 echo.
 echo     MOD SETUP OPTIONS TO USE IN ORDER
 echo     ---------------------------------
-echo     1) Set Fable directories
+echo     1) Set directories
 echo     2) Enable mods
-echo     3) Make a backup of Fable TLC
-echo     4) Create FTLC-FA symlink
+echo     3) Backup Fable TLC
+echo     4) Make FTLC-FA symlink
 echo.
 echo     EXTRA OPTIONS
 echo     ---------------------------------
@@ -141,12 +142,10 @@ goto mainmenu
         echo Anniversary directory set to !faPath!
     ) else (
         echo The specified directory does not exist, please try again...
-        pause
-        goto SETDIR
     )
 
     pause
-    goto mainmenu
+    goto SETDIR
 
 :SETDIR
     cls
@@ -159,7 +158,7 @@ goto mainmenu
     if /I "%userinp%"=="1" goto SET_TLC
     if /I "%userinp%"=="2" goto SET_ANNIV
     if /I "%userinp%"=="B" goto mainmenu
-    echo Invalid or unsupported
+    echo Invalid selection, try again...
     pause
     goto SETDIR
 
