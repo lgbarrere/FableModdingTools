@@ -3,9 +3,9 @@
 setlocal enabledelayedexpansion
 
 :: === Global constants for default paths ===
-set "DEFAULT_DIR_FTLC_CD=C:\Program Files (x86)\Microsoft Games\Fable - The Lost Chapters"
-set "DEFAULT_DIR_FTLC_STEAM=C:\Program Files (x86)\Steam\steamapps\common\Fable The Lost Chapters"
-set "DEFAULT_DIR_FA=C:\Program Files (x86)\Steam\steamapps\common\Fable Anniversary"
+set "DEFAULT_DIR_FTLC_CD=%ProgramFiles(x86)%\Microsoft Games\Fable - The Lost Chapters"
+set "DEFAULT_DIR_FTLC_STEAM=%ProgramFiles(x86)%\Steam\steamapps\common\Fable The Lost Chapters"
+set "DEFAULT_DIR_FA=%ProgramFiles(x86)%\Steam\steamapps\common\Fable Anniversary"
 set "ROOT_DIR=%~dp0"
 set "CONFIG_DIR=%ROOT_DIR%\config"
 set "CONFIG_FTLC=FTLC_path.txt"
