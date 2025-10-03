@@ -328,15 +328,15 @@ goto mainmenu
 :CHOCOLATEBOX
     rem Launch ChocolateBox
     if exist "!faPath!\" (
-        copy /Y "!ROOT_DIR!\tools\default_xuserst.ini" "!faPath!\WellingtonGame\FableData\Build" >nul
+        copy /Y "!ROOT_DIR!\tools\Chocolate Box\default_xuserst.ini" "!faPath!\WellingtonGame\FableData\Build" >nul
     )
-    start "" "%ROOT_DIR%\tools\ChocolateBox.exe"
+    start "" "%ROOT_DIR%\tools\Chocolate Box\ChocolateBox.exe"
     goto mainmenu
 
 :FABLEEXPLORER
     rem Launch Fable Explorer
     rem Move where FableExplorer.exe is to make it detect def.xml dependency
-    cd /d %ROOT_DIR%\tools
+    cd /d %ROOT_DIR%\tools\FableExplorer
     start "" "FableExplorer.exe"
     goto mainmenu
 

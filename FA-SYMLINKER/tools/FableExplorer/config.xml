@@ -11,7 +11,7 @@
 	<ApplicationSettings>
 		<UseRegistry>FALSE</UseRegistry>
 		<RegistryPath>SOFTWARE\\Microsoft\\Microsoft Games\\Fable\\1.0</RegistryPath>
-		<InstallDirectory>c:\Program Files\Microsoft Games\Fable - The Lost Chapters\</InstallDirectory>
+		<InstallDirectory>C:\Games\Fable - The Lost Chapters\</InstallDirectory>
 		<InternalSplash>FALSE</InternalSplash>
 		<SplashFileName>Shadow Net.jpg</SplashFileName>
 	</ApplicationSettings>		
