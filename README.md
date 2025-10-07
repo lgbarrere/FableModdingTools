@@ -8,6 +8,8 @@ This project regroups the following tools in the same place:
 * [Freeroam](https://www.nexusmods.com/fableanniversary/mods/25)
 
 These tools can be used to mod ``Fable - The Lost Chapters`` (FTLC) and ``Fable Anniversary`` (FA).
+> [!NOTE]
+> The **def.xml** file is used by **Chocolate Box** and **Fable Explorer ShadowNet** to identify some definitions from the game, it is regularly updated. The latest version can be found on the related [Nexus Mods](https://www.nexusmods.com/fablethelostchapters/mods/445?tab=files) page.
 
 The FA-SYMLINKER.bat script allows to quickly:
 * Make a backup of FTLC
