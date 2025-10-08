@@ -10,14 +10,16 @@ set "ROOT_DIR=%~dp0"
 set "CONFIG_DIR=%ROOT_DIR%\config"
 set "CONFIG_FTLC=FTLC_path.txt"
 set "CONFIG_FA=FA_path.txt"
+set "CONFIG_MOD=MOD_path.txt"
 
 :: === Global variables for loaded or set paths by the user ===
 set "ftlcPath="
 set "faPath="
+set "modPath="
 
 :: === Initializations ===
 call :require_admin
-call :init_directories
+call :init_configs
 call :load_paths
 
 :mainmenu
@@ -36,12 +38,13 @@ echo ---------------------------------------------------------------------------
 echo.
 echo Fable TLC location: %ftlcPath%
 echo Fable Anniversary location: %faPath%
+echo Mod release location: %modPath%
 echo.
 echo     MOD SETUP OPTIONS TO USE IN ORDER
 echo     ---------------------------------
 echo     1) Set directories
-echo     2) Enable mods
-echo     3) Backup Fable TLC
+echo     2) Backup Fable TLC
+echo     3) Enable mods
 echo     4) Make FTLC-FA symlink
 echo.
 echo     EXTRA OPTIONS
@@ -49,17 +52,19 @@ echo     ---------------------------------
 echo     D) Load default directories
 echo     C) Launch ChocolateBox
 echo     E) Launch Fable Explorer
+echo     R) Prepare FA mod release
 echo     Q) Quit
 echo.
 set /P "userinp=Make your selection: "
 set "userinp=%userinp:~0,1%"
 if /I "%userinp%"=="1" goto SETDIR
-if /I "%userinp%"=="2" goto ENABLEMODS
-if /I "%userinp%"=="3" goto BACKUP
+if /I "%userinp%"=="2" goto BACKUP
+if /I "%userinp%"=="3" goto ENABLEMODS
 if /I "%userinp%"=="4" goto SYMLINK
 if /I "%userinp%"=="D" goto DEFAULT
 if /I "%userinp%"=="C" goto CHOCOLATEBOX
 if /I "%userinp%"=="E" goto FABLEEXPLORER
+if /I "%userinp%"=="R" goto RELEASE
 if /I "%userinp%"=="Q" goto QUIT
 echo Invalid selection, try again...
 pause
@@ -84,8 +89,8 @@ goto mainmenu
     color 0a
     goto :eof
 
-:init_directories
-    rem Usage: call :init_directories
+:init_configs
+    rem Usage: call :init_configs
     rem Make a directory to save paths if missing
     if not exist "%CONFIG_DIR%\" mkdir "%CONFIG_DIR%"
     goto :eof
@@ -95,6 +100,7 @@ goto mainmenu
     rem Load configured paths if any
     if exist "%CONFIG_DIR%\%CONFIG_FTLC%" set /p ftlcPath=<"%CONFIG_DIR%\%CONFIG_FTLC%"
     if exist "%CONFIG_DIR%\%CONFIG_FA%" set /p faPath=<"%CONFIG_DIR%\%CONFIG_FA%"
+    if exist "%CONFIG_DIR%\%CONFIG_MOD%" set /p modPath=<"%CONFIG_DIR%\%CONFIG_MOD%"
     goto :eof
 
 :savedir
@@ -147,51 +153,34 @@ goto mainmenu
     pause
     goto SETDIR
 
+:SET_MOD
+    cls
+    echo Enter custom path for your FA mod release (without ending backslash):
+    set /p "userInput=Path: "
+
+    set "modPath=!userInput!"
+    echo !modPath!>"!CONFIG_DIR!\!CONFIG_MOD!"
+    echo Mod release directory set to !modPath!
+
+    pause
+    goto SETDIR
+
 :SETDIR
     cls
     echo Setting directories:
     echo 1) Fable TLC
     echo 2) Fable Anniversary
+    echo 3) FA Mod release
     echo B) Back to main menu
     set /p "userinp=Your choice: "
     set "userinp=%userinp:~0,1%"
     if /I "%userinp%"=="1" goto SET_TLC
     if /I "%userinp%"=="2" goto SET_ANNIV
+    if /I "%userinp%"=="3" goto SET_MOD
     if /I "%userinp%"=="B" goto mainmenu
     echo Invalid selection, try again...
     pause
     goto SETDIR
-
-:ENABLEMODS
-    rem Respectively become owner, grant all rights and remove "Read-Only" attribute
-    cls
-    echo Enabling modifications...
-
-    rem Allow modding for Fable TLC
-    if exist "!ftlcPath!\" (
-        takeown /f "!ftlcPath!" /r
-        icacls "!ftlcPath!" /grant "%USERNAME%":F /t
-        attrib -r "!ftlcPath!\*.*" /s /d
-    ) else (
-        echo The path to Fable TLC is not correct, consider to set it from the main menu
-        echo.
-        pause
-    )
-
-    rem Allow modding for Fable Anniversary
-    if exist "!faPath!\" (
-        takeown /f "!faPath!" /r
-        icacls "!faPath!" /grant "%USERNAME%":F /t
-        attrib -r "!faPath!\*.*" /s /d
-    ) else (
-        echo The path to Fable Anniversary is not correct, consider to set it from the main menu
-        echo.
-        pause
-    )
-
-    echo Operation complete
-    pause
-    goto mainmenu
 
 :BACKUP
     cls
@@ -235,6 +224,37 @@ goto mainmenu
     pause
     goto mainmenu
 
+:ENABLEMODS
+    rem Respectively become owner, grant all rights and remove "Read-Only" attribute
+    cls
+    echo Enabling modifications...
+
+    rem Allow modding for Fable TLC
+    if exist "!ftlcPath!\" (
+        takeown /f "!ftlcPath!" /r
+        icacls "!ftlcPath!" /grant "%USERNAME%":F /t
+        attrib -r "!ftlcPath!\*.*" /s /d
+    ) else (
+        echo The path to Fable TLC is not correct, consider to set it from the main menu
+        echo.
+        pause
+    )
+
+    rem Allow modding for Fable Anniversary
+    if exist "!faPath!\" (
+        takeown /f "!faPath!" /r
+        icacls "!faPath!" /grant "%USERNAME%":F /t
+        attrib -r "!faPath!\*.*" /s /d
+    ) else (
+        echo The path to Fable Anniversary is not correct, consider to set it from the main menu
+        echo.
+        pause
+    )
+
+    echo Operation complete
+    pause
+    goto mainmenu
+
 :SYMLINK
     rem Check the path to FTLC exists
     cls
@@ -269,15 +289,12 @@ goto mainmenu
         dir "!junctionPath!" | findstr /i "<JUNCTION>" >nul
         if %errorlevel%==0 (
             echo The junction already exists
-            echo Replacement with a new junction...
+            echo Replacing by a new junction...
             rmdir "!junctionPath!"
         ) else (
-            echo The following path exists but it is not a junction or it is corrupted:
-            echo !junctionPath!
-            echo Consider making a backup from the menu and remove the folder manually
-            echo Operation aborted
-            pause
-            goto mainmenu
+            echo The path exists but it is a folder
+            echo Replacing by a junction...
+            rmdir /S /Q "!junctionPath!"
         )
     )
 
@@ -338,6 +355,58 @@ goto mainmenu
     rem Move where FableExplorer.exe is to make it detect def.xml dependency
     cd /d %ROOT_DIR%\tools\FableExplorer
     start "" "FableExplorer.exe"
+    goto mainmenu
+
+:RELEASE
+    rem Copy the mod files as a new release
+    cls
+    echo Saving the mod as a new release...
+
+    rem Check modPath is defined
+    if "!modPath!"=="" (
+        echo The mod release path is empty, please set it from the main menu
+        pause
+        goto mainmenu
+    )
+
+    rem Check the path to FA exists
+    if not exist "!faPath!\" (
+        echo Fable Anniversary folder not found, please set it from the main menu
+        pause
+        goto mainmenu
+    )
+
+    rem Create the necessary mod folder if missing
+    if exist "!modPath!\WellingtonGame\" (
+        echo A mod release already exists, deleting it...
+        rmdir /s /q "!modPath!\WellingtonGame" >nul 2>&1
+        if exist "!modPath!\WellingtonGame\" (
+            echo Failed to delete existing mod release
+            echo A mod release file might be in use, operation aborted
+            echo The corrupted mod release is located at "!modPath!\WellingtonGame"
+            pause
+            goto mainmenu
+        ) else (
+            echo Previous mod release deleted
+        )
+    )
+
+    rem Copy the mod files
+    set "relativeDefsPath=WellingtonGame\FableData\Build\Data\CompiledDefs\Development"
+    set "faSrcDefs=%faPath%\%relativeDefsPath%"
+    set "modDstDefs=%modPath%\%relativeDefsPath%"
+    mkdir "%modDstDefs%"
+    copy /Y "%faSrcDefs%\names.bin" "%modDstDefs%\"
+    copy /Y "%faSrcDefs%\game.bin" "%modDstDefs%\"
+    copy /Y "%faSrcDefs%\gamehard.bin" "%modDstDefs%\"
+    copy /Y "%faSrcDefs%\script.bin" "%modDstDefs%\"
+    copy /Y "%faSrcDefs%\scripthard.bin" "%modDstDefs%\"
+
+    rem Copy the FinalAlbion folder
+    xcopy /E /Y /I "%faPath%\WellingtonGame\FableData\Build\Data\Levels\FinalAlbion" "%modPath%\WellingtonGame\FableData\Build\Data\Levels\FinalAlbion\"
+
+    echo Mod release done
+    pause
     goto mainmenu
 
 :QUIT
