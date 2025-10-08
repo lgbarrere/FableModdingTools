@@ -16,7 +16,7 @@ The FA-SYMLINKER.bat script allows to quickly:
 * Enable all permissions to mod FTLC and FA
 * Make a symlink between FTLC and FA to launch the tools the same way for both games
 
-<img width="899" height="837" alt="Image of Fable Anniversary Symlinker" src="https://github.com/user-attachments/assets/efb17449-e3eb-4fcf-adf7-3d08f638d530" />
+<img width="900" height="837" alt="Image of Fable Anniversary Symlinker" src="https://github.com/user-attachments/assets/94696a18-59c4-4fba-9613-7e8d6dc6e1fd" />
 
 ## Tools Setup & Use
 1) Go to the [Release](https://github.com/lgbarrere/FableModdingTools/releases) section and download the last available FA-SYMLINKER.zip
