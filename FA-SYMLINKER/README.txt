@@ -33,9 +33,9 @@ The Main Menu is composed by 4 sections:
 
 It is highly recommended to execute all options in order from "MOD SETUP OPTIONS TO USE IN ORDER".
 A number must be typed (among the visible ones to the left), then press enter to validate the choice.
-1) Set directories: Redirect to another menu (using the same logic) to set FTLC and FA folders
-2) Enable mods: Become owner, grant rights and remove "Read-Only" of Fable games to let mods modify files
-3) Backup Fable TLC: Make a "Fable - TLC" backup using the "Fable TLC location" path (erased if existing)
+1) Set directories: Redirect to another menu (using the same logic) to set FTLC, FA and the mod release folders
+2) Backup Fable TLC: Make a "Fable - TLC" backup using the "Fable TLC location" path (erased if existing)
+3) Enable mods: Become owner, grant rights and remove "Read-Only" of Fable games to let mods modify files
 4) Make FTLC-FA symlink: Make a symlink to pretend "FableAlbion" from FTLC exists, but is located in FA
 
 Some extra options can be used to help the user, to select from "EXTRA OPTIONS".
@@ -43,4 +43,5 @@ A letter must be typed (among the visible ones to the left), then press enter to
 D) Load default directories: Try to set FTLC and FA automatically
 C) Launch ChocolateBox: Execute the modding tool "ChocolateBox"
 E) Launch Fable Explorer: Execute the modding tool "Fable Explorer"
+R) Prepare FA mod release: Copy the mod from Fable Anniversary to the defined release folder
 Q) Quit: Close the script
