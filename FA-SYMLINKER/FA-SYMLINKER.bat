@@ -184,42 +184,92 @@ goto mainmenu
 
 :BACKUP
     cls
-    rem Check the game folder exists
+    rem Check the game folders exist
+    set "ftlcNotFound=False"
+    set "faNotFound=False"
+
     if not exist "!ftlcPath!\" (
-        echo Path to Fable - The Lost Chapters not found, please set it from the main menu
+        echo Path to Fable The Lost Chapters not found, please set it from the main menu
+        set "ftlcNotFound=True"
         pause
-        goto mainmenu
     )
 
-    rem Extract parent folder from %ftlcPath%
-    echo Creating backup of Fable - The Lost Chapters...
-    for %%I in ("%ftlcPath%") do set "PARENT_DIR=%%~dpI"
-    set "PARENT_DIR=%PARENT_DIR:~0,-1%"
+    if not exist "!faPath!\" (
+        echo Path to Fable Anniversary not found, please set it from the main menu
+        echo.
+        set "faNotFound=True"
+        pause
+    )
 
-    rem Set path for the backup
-    set "gameDirBackup=%PARENT_DIR%\Fable - TLC"
-
-    rem Check no backup exists, otherwise clean it
-    if exist "!gameDirBackup!\" (
-        echo Backup folder already exists, deleting it...
-        rmdir /s /q "!gameDirBackup!" >nul 2>&1
-        if exist "!gameDirBackup!\" (
-            echo Failed to delete existing backup
-            echo A backup file might be in use, operation aborted
-            echo The corrupted backup is located at "!gameDirBackup!"
-            pause
+    if "!ftlcNotFound!"=="True" (
+        if "!faNotFound!"=="True" (
             goto mainmenu
-        ) else (
-            echo Previous backup deleted
         )
     )
 
-    rem Copy the game folder in the backup folder
-    echo.
-    echo Copying "%ftlcPath%" to "%gameDirBackup%"
-    echo Please wait, this operation can take a while...
-    xcopy "%ftlcPath%" "%gameDirBackup%\" /E /I /H /K /Y >nul
-    echo Backup completed successfully
+    if "!ftlcNotFound!"=="False" (
+        rem Extract parent folder from %ftlcPath%
+        echo Creating backup of Fable The Lost Chapters...
+        for %%I in ("%ftlcPath%") do set "PARENT_DIR=%%~dpI"
+        set "PARENT_DIR=%PARENT_DIR:~0,-1%"
+
+        rem Set path for the backup
+        set "gameDirBackup=%PARENT_DIR%\Fable The Lost Chapters - backup"
+
+        rem Check no backup exists, otherwise clean it
+        if exist "!gameDirBackup!\" (
+            echo Backup folder already exists, deleting it...
+            rmdir /s /q "!gameDirBackup!" >nul 2>&1
+            if exist "!gameDirBackup!\" (
+                echo Failed to delete existing backup
+                echo A backup file might be in use, operation aborted
+                echo The corrupted backup is located at "!gameDirBackup!"
+                pause
+                goto mainmenu
+            ) else (
+                echo Previous backup deleted
+            )
+        )
+
+        rem Copy the game folder in the backup folder
+        echo.
+        echo Copying "%ftlcPath%" to "%gameDirBackup%"
+        echo Please wait, this operation can take a while...
+        xcopy "%ftlcPath%" "%gameDirBackup%\" /E /I /H /K /Y >nul
+        echo Backup completed successfully
+        echo.
+    )
+
+    if "!faNotFound!"=="False" (
+        rem Extract parent folder from %faPath%
+        echo Creating backup of Fable The Lost Chapters...
+        for %%I in ("%faPath%") do set "PARENT_DIR=%%~dpI"
+        set "PARENT_DIR=%PARENT_DIR:~0,-1%"
+
+        rem Set path for the backup
+        set "gameDirBackup=%PARENT_DIR%\Fable Anniversary - backup"
+
+        rem Check no backup exists, otherwise clean it
+        if exist "!gameDirBackup!\" (
+            echo Backup folder already exists, deleting it...
+            rmdir /s /q "!gameDirBackup!" >nul 2>&1
+            if exist "!gameDirBackup!\" (
+                echo Failed to delete existing backup
+                echo A backup file might be in use, operation aborted
+                echo The corrupted backup is located at "!gameDirBackup!"
+                pause
+                goto mainmenu
+            ) else (
+                echo Previous backup deleted
+            )
+        )
+
+        echo.
+        echo Copying "%faPath%" to "%gameDirBackup%"
+        echo Please wait, this operation can take a while...
+        xcopy "%faPath%" "%gameDirBackup%\" /E /I /H /K /Y >nul
+        echo Backup completed successfully
+    )
 
     pause
     goto mainmenu
@@ -245,6 +295,10 @@ goto mainmenu
         takeown /f "!faPath!" /r
         icacls "!faPath!" /grant "%USERNAME%":F /t
         attrib -r "!faPath!\*.*" /s /d
+        rem Backup the WAD to force the game use the FinalAlbion folder instead of the WAD
+        if exist "!faPath!\WellingtonGame\FableData\Build\Data\Levels\FinalAlbion.wad" (
+            ren "!faPath!\WellingtonGame\FableData\Build\Data\Levels\FinalAlbion.wad" "_FinalAlbion.wad"
+        )
     ) else (
         echo The path to Fable Anniversary is not correct, consider to set it from the main menu
         echo.
@@ -286,13 +340,13 @@ goto mainmenu
     rem Check the path to the jonction already exists
     if exist "!junctionPath!\" (
         rem Check if the path lead to a junction (not a folder)
-        dir "!junctionPath!" | findstr /i "<JUNCTION>" >nul
+        fsutil reparsepoint query "!junctionPath!" >nul 2>&1
         if %errorlevel%==0 (
             echo The junction already exists
             echo Replacing by a new junction...
             rmdir "!junctionPath!"
         ) else (
-            echo The path exists but it is a folder
+            echo The path exists but it is a regular folder
             echo Replacing by a junction...
             rmdir /S /Q "!junctionPath!"
         )
