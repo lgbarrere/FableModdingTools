@@ -208,13 +208,13 @@ goto mainmenu
     )
 
     if "!ftlcNotFound!"=="False" (
-        rem Extract parent folder from %ftlcPath%
+        rem Extract parent folder from !ftlcPath!
         echo Creating backup of Fable The Lost Chapters...
-        for %%I in ("%ftlcPath%") do set "PARENT_DIR=%%~dpI"
-        set "PARENT_DIR=%PARENT_DIR:~0,-1%"
+        for %%I in ("!ftlcPath!") do set "PARENT_DIR=%%~dpI"
+        set "PARENT_DIR=!PARENT_DIR:~0,-1!"
 
         rem Set path for the backup
-        set "gameDirBackup=%PARENT_DIR%\Fable The Lost Chapters - backup"
+        set "gameDirBackup=!PARENT_DIR!\Fable The Lost Chapters - backup"
 
         rem Check no backup exists, otherwise clean it
         if exist "!gameDirBackup!\" (
@@ -231,23 +231,22 @@ goto mainmenu
             )
         )
 
-        rem Copy the game folder in the backup folder
         echo.
-        echo Copying "%ftlcPath%" to "%gameDirBackup%"
+        echo Copying "!ftlcPath!" to "!gameDirBackup!"
         echo Please wait, this operation can take a while...
-        xcopy "%ftlcPath%" "%gameDirBackup%\" /E /I /H /K /Y >nul
+        xcopy "!ftlcPath!" "!gameDirBackup!\" /E /I /H /K /Y >nul
         echo Backup completed successfully
         echo.
     )
 
     if "!faNotFound!"=="False" (
-        rem Extract parent folder from %faPath%
-        echo Creating backup of Fable The Lost Chapters...
-        for %%I in ("%faPath%") do set "PARENT_DIR=%%~dpI"
-        set "PARENT_DIR=%PARENT_DIR:~0,-1%"
+        rem Extract parent folder from !faPath!
+        echo Creating backup of Fable Anniversary...
+        for %%I in ("!faPath!") do set "PARENT_DIR=%%~dpI"
+        set "PARENT_DIR=!PARENT_DIR:~0,-1!"
 
         rem Set path for the backup
-        set "gameDirBackup=%PARENT_DIR%\Fable Anniversary - backup"
+        set "gameDirBackup=!PARENT_DIR!\Fable Anniversary - backup"
 
         rem Check no backup exists, otherwise clean it
         if exist "!gameDirBackup!\" (
@@ -265,9 +264,9 @@ goto mainmenu
         )
 
         echo.
-        echo Copying "%faPath%" to "%gameDirBackup%"
+        echo Copying "!faPath!" to "!gameDirBackup!"
         echo Please wait, this operation can take a while...
-        xcopy "%faPath%" "%gameDirBackup%\" /E /I /H /K /Y >nul
+        xcopy "!faPath!" "!gameDirBackup!\" /E /I /H /K /Y >nul
         echo Backup completed successfully
     )
 
